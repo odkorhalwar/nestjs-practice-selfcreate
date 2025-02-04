@@ -1,12 +1,14 @@
-import { Controller, Get } from '@nestjs/common';
+import { Bind, Controller, Get, Req } from '@nestjs/common';
 import { AppService } from './app.service';
+import { Request } from 'express';
 
-@Controller()
+@Controller('app')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('hello')
+  @Bind(Req())
+  getHello(request: Request): any {
+    return request.headers; //根据express的request获取请求相关的所有信息
   }
 }
